@@ -222,8 +222,9 @@ public:
 };
 
 //- Specify data associated with meshOctreeCubeCoordinates type is contiguous
-template<>
-inline bool contiguous<meshOctreeCubeCoordinates>() {return true;}
+//template<>
+//inline bool contiguous<>() {return true;}
+template<> struct is_contiguous<meshOctreeCubeCoordinates> : std::true_type {};
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

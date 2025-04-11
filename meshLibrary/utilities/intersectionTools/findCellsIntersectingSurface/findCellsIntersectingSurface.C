@@ -34,6 +34,7 @@ Description
 #include "meshOctree.H"
 #include "meshOctreeCreator.H"
 #include "HashSet.H"
+#include "demandDrivenData.H"
 
 # ifdef USE_OMP
 #include <omp.h>
@@ -313,7 +314,7 @@ findCellsIntersectingSurface::findCellsIntersectingSurface
 findCellsIntersectingSurface::~findCellsIntersectingSurface()
 {
     if( octreeGenerated_ )
-        deleteDemandDrivenData(octreePtr_);
+        Foam::deleteDemandDrivenData(octreePtr_);
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

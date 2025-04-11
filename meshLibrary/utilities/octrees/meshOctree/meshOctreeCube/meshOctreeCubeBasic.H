@@ -130,10 +130,12 @@ public:
 };
 
 //- Specify data associated with meshOctreeCubeBasic type is contiguous
-template<>
-inline bool contiguous<meshOctreeCubeBasic>() {
-    return true;
-}
+//template<>
+//inline bool contiguous<meshOctreeCubeBasic>() {
+//    return true;
+//}
+template<> struct is_contiguous<meshOctreeCubeBasic> : std::true_type {};
+
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

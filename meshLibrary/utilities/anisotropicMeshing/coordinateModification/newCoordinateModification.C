@@ -26,6 +26,7 @@ License
 #include "coordinateModification.H"
 #include "dictionary.H"
 #include "error.H"
+#include "addToRunTimeSelectionTable.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -34,46 +35,40 @@ namespace Foam
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
-autoPtr<Foam::coordinateModification> Foam::coordinateModification::New
+autoPtr<coordinateModification> coordinateModification::New
 (
     const word& name,
     const dictionary& dict
 )
 {
-    if( debug )
+    if (debug)
     {
-        Info<< "coordinateModification::New(const word&, const dictionary&) : "
-            << "constructing coordinateModification"
-            << endl;
+        Info << "coordinateModification::New(const word&, const dictionary&) : "
+             << "constructing coordinateModification" << endl;
     }
 
-    // default type is self
+    // Get type name from dictionary (or fallback to this base class name)
     word cmType(typeName_());
-    if( dict.found("type") )
+    if (dict.found("type"))
     {
         dict.lookup("type") >> cmType;
     }
 
-    dictionaryConstructorTable::iterator cstrIter =
-        dictionaryConstructorTablePtr_->find(cmType);
+    auto* ctorPtr = dictionaryConstructorTable(cmType);
 
-    if( cstrIter == dictionaryConstructorTablePtr_->end() )
+    if (!ctorPtr)
     {
-        FatalIOErrorIn
+        FatalIOErrorInLookup
         (
+            dict,
             "coordinateModification::New(const word&, const dictionary&)",
-            dict
-        )   << "Unknown coordinateModification type " << cmType << nl << nl
-            << "Valid coordinateModification types are :" << nl
-            << "[default: " << typeName_() << "]"
-            << dictionaryConstructorTablePtr_->toc()
-            << exit(FatalIOError);
+            cmType,
+            *dictionaryConstructorTablePtr_
+        ) << exit(FatalIOError);
     }
 
-    return autoPtr<coordinateModification>(cstrIter()(name, dict));
+    return autoPtr<coordinateModification>(ctorPtr(name, dict));
 }
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 } // End namespace Foam
 

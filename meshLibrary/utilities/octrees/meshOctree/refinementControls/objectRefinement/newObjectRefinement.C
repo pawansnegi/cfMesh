@@ -31,7 +31,6 @@ License
 
 namespace Foam
 {
-
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
 autoPtr<Foam::objectRefinement> Foam::objectRefinement::New
@@ -54,23 +53,38 @@ autoPtr<Foam::objectRefinement> Foam::objectRefinement::New
         dict.lookup("type") >> refType;
     }
 
-    dictionaryConstructorTable::iterator cstrIter =
-        dictionaryConstructorTablePtr_->find(refType);
+    // dictionaryConstructorTable::iterator cstrIter =
+    //     dictionaryConstructorTablePtr_->find(refType);
 
-    if( cstrIter == dictionaryConstructorTablePtr_->end() )
+    // if( cstrIter == dictionaryConstructorTablePtr_->end() )
+    // {
+    //     FatalIOErrorIn
+    //     (
+    //         "objectRefinement::New(const word&, const dictionary&)",
+    //         dict
+    //     )   << "Unknown objectRefinement type " << refType << nl << nl
+    //         << "Valid objectRefinement types are :" << nl
+    //         << "[default: " << typeName_() << "]"
+    //         << dictionaryConstructorTablePtr_->toc()
+    //         << exit(FatalIOError);
+    // }
+
+    // return autoPtr<objectRefinement>(cstrIter()(name, dict));
+
+    auto* ctorPtr = dictionaryConstructorTable(refType);
+
+    if (!ctorPtr)
     {
-        FatalIOErrorIn
+        FatalIOErrorInLookup
         (
-            "objectRefinement::New(const word&, const dictionary&)",
-            dict
-        )   << "Unknown objectRefinement type " << refType << nl << nl
-            << "Valid objectRefinement types are :" << nl
-            << "[default: " << typeName_() << "]"
-            << dictionaryConstructorTablePtr_->toc()
-            << exit(FatalIOError);
+            dict,
+            "coordinateModification::New(const word&, const dictionary&)",
+            refType,
+            *dictionaryConstructorTablePtr_
+        ) << exit(FatalIOError);
     }
 
-    return autoPtr<objectRefinement>(cstrIter()(name, dict));
+    return autoPtr<objectRefinement>(ctorPtr(name, dict));
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

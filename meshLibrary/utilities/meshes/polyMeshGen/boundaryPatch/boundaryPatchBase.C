@@ -61,23 +61,20 @@ autoPtr<boundaryPatchBase> boundaryPatchBase::New
     if( type != "processor" )
         type = "patch";
     
-    dictionaryConstructorTable::iterator cstrIter =
-        dictionaryConstructorTablePtr_->find(type);
+    auto* ctorPtr = dictionaryConstructorTable(type);
 
-    if( cstrIter == dictionaryConstructorTablePtr_->end() )
+    if (!ctorPtr)
     {
-        FatalIOErrorIn
+        FatalIOErrorInLookup
         (
+            dict,
             "boundaryPatchBase::New(const word&, const dictionary&)",
-            dict
-        )   << "Unknown boundaryPatchBase type " << type << nl << nl
-            << "Valid boundaryPatchBase types are :" << nl
-            << "[default: " << typeName_() << "]"
-            << dictionaryConstructorTablePtr_->toc()
-            << exit(FatalIOError);
+            type,
+            *dictionaryConstructorTablePtr_
+        ) << exit(FatalIOError);
     }
     
-    return autoPtr<boundaryPatchBase>(cstrIter()(name, dict));
+    return autoPtr<boundaryPatchBase>(ctorPtr(name, dict));
 }
 
 autoPtr<boundaryPatchBase> boundaryPatchBase::New

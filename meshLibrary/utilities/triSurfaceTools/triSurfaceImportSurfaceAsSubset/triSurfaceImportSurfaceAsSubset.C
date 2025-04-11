@@ -29,6 +29,7 @@ Description
 #include "meshOctree.H"
 #include "meshOctreeCreator.H"
 #include "helperFunctions.H"
+#include "demandDrivenData.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -55,7 +56,7 @@ triSurfaceImportSurfaceAsSubset::triSurfaceImportSurfaceAsSubset(triSurf& surfac
 
 triSurfaceImportSurfaceAsSubset::~triSurfaceImportSurfaceAsSubset()
 {
-    deleteDemandDrivenData(octreePtr_);
+	Foam::deleteDemandDrivenData(octreePtr_);
 }
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

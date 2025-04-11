@@ -146,7 +146,7 @@ void exchangeMap
 {
     data.clear();
 
-    if( !contiguous<T>() )
+    if( !Foam::is_contiguous<T>() )
         FatalError << "Data is not contiguous" << exit(FatalError);
 
     typename std::map<label, ListType>::const_iterator iter;
@@ -332,7 +332,7 @@ void exchangeMap
 {
     mOut.clear();
 
-    if( !contiguous<T>() )
+    if( !Foam::is_contiguous<T>() )
         FatalError << "Data is not contigous" << exit(FatalError);
 
     typename std::map<label, ListType>::const_iterator iter;

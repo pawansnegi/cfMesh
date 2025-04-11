@@ -164,8 +164,7 @@ class parMapperHelper
 };
 
 //- Specify data associated with parMapperHelper type is contiguous
-template<>
-inline bool contiguous<parMapperHelper>() {return true;}
+template<> struct is_contiguous<parMapperHelper> : std::true_type {};
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

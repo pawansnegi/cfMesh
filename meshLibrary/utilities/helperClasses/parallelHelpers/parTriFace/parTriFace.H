@@ -141,8 +141,9 @@ class parTriFace
 };
 
 //- Specify data associated with parTriFace type is contiguous
-template<>
-inline bool contiguous<parTriFace>() {return true;}
+// template<>
+// inline bool contiguous<parTriFace>() {return true;}
+template<> struct is_contiguous<parTriFace> : std::true_type {};
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

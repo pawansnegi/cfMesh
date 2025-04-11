@@ -23,6 +23,8 @@ License
 
 \*---------------------------------------------------------------------------*/
 
+#include "DynList.H"
+
 template<class T, Foam::label staticSize>
 inline T* Foam::DynList<T, staticSize>::data()
 {
@@ -248,7 +250,7 @@ inline Foam::label Foam::DynList<T, staticSize>::byteSize() const
     checkAllocation();
     # endif
 
-    if( !contiguous<T>() )
+    if( !Foam::is_contiguous<T>() )
     {
         FatalErrorIn("DynList<T>::byteSize()")
             << "Cannot return the binary size of a list of "

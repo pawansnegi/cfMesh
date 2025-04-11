@@ -89,7 +89,7 @@ public:
         //- Construct as copy
         xmlTag(const xmlTag& tag)
         :
-            OStringStream(tag),
+            OStringStream(),
             name_(tag.name_),
             attributes_(tag.attributes_),
             children_(tag.children_)

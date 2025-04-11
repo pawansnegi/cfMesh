@@ -23,6 +23,7 @@ License
 
 \*---------------------------------------------------------------------------*/
 
+#include "LongList.H"
 #include "contiguous.H"
 
 template<class T, Foam::label Offset>
@@ -208,7 +209,7 @@ inline Foam::label Foam::LongList<T, Offset>::size() const
 template<class T, Foam::label Offset>
 inline Foam::label Foam::LongList<T, Offset>::byteSize() const
 {
-    if( !contiguous<T>() )
+    if( !Foam::is_contiguous<T>() )
     {
         FatalErrorIn("LongList<T, Offset>::byteSize()")
             << "Cannot return the binary size of a list of "

@@ -39,6 +39,8 @@ SourceFiles
 #include "point.H"
 #include "dictionary.H"
 #include "PtrList.H"
+#include "autoPtr.H"
+#include "runTimeSelectionTables.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
